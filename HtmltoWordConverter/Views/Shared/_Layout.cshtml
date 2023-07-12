@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] html converter</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        @*<link rel="stylesheet" href="~/css/site.css" />*@
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <link rel="apple-touch-icon" href="~/AdminAssets/app-assets/images/ico/apple-icon-120.png">
+    <link rel="icon" type="image/png" href="~/AdminAssets/app-assets/images/logo/HCSlogo.png">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/charts/chartist.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/extensions/swiper.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/themes/semi-dark-layout.css">
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    @RenderSection("Css", required: false)
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/pages/page-user-profile.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/pages/chart-chartist.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/pages/chart-chartist.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/pages/dashboard-ecommerce.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/pages/dashboard-analytics.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/pages/widgets.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/css/plugins/forms/wizard.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/assets/css/style.css">
+    <!-- END: Custom CSS-->
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/pickers/pickadate/pickadate.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminAssets/app-assets/vendors/css/pickers/daterange/daterangepicker.css">
+    <!-- END: Vendor CSS-->
+    @*Multi Select css Start*@
+    <link href="~/AdminAssets/assets/css/easySelectStyle.css" rel="stylesheet" />
+    @*Multi Select css End*@
+
+  
+</head>
+<body class="vertical-layout vertical-menu-modern boxicon-layout no-card-shadow 2-columns  navbar-sticky footer-static">
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - HtmltoWordConverter - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+  
+    <!-- END: Page Vendor JS-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+
+
+
+    <script src="~/AdminAssets/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="~/AdminAssets/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js"></script>
+    <script src="~/AdminAssets/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+    <script src="~/AdminAssets/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+
+    <script src="~/AdminAssets/app-assets/vendors/js/extensions/dragula.min.js"></script>
+    @*<script src="~/AdminAssets/app-assets/vendors/js/charts/apexcharts.min.js"></script>*@
+    <script src="~/AdminAssets/app-assets/vendors/js/extensions/swiper.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="~/AdminAssets/app-assets/js/scripts/configs/vertical-menu-light.js"></script>
+    <script src="~/AdminAssets/app-assets/js/core/app-menu.js"></script>
+    <script src="~/AdminAssets/app-assets/js/core/app.js"></script>
+    <script src="~/AdminAssets/app-assets/js/scripts/components.js"></script>
+    <script src="~/AdminAssets/app-assets/js/scripts/footer.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Page JS-->
+    @*<script src="~/AdminAssets/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>*@
+    <script src="~/AdminAssets/app-assets/js/scripts/datatables/datatable.js"></script>
+    <script src="~/AdminAssets/app-assets/js/scripts/forms/wizard-steps.js"></script>
+    <!-- END: Page JS-->
+    <!-- BEGIN: Page JS-->
+    @*<script src="~/AdminAssets/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>*@
+    <!-- END: Page JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="~/AdminAssets/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/extensions/moment.min.js"></script>
+    <script src="~/AdminAssets/app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+
+    <!-- END: Page Vendor JS-->
+    @*Multi Select Js Start*@
+    <script src="~/AdminAssets/assets/js/easySelect.js"></script>
+    @*Multi Select Js End*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
