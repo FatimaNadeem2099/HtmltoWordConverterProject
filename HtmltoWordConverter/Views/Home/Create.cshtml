@@ -110,21 +110,19 @@
                                     </div>
 
 
-
-
                                     <div class="col-sm-12">
-                                        <div class="" id="ProductForm">
-                                            <div class="row clearfix">
+                                        <div class="" id="LanguageForm">
+                                            <div  class="row clearfix">
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label> Department </label>
-                                                        <select name="DepartmentSection[0].departmentId" id="department[0]" value="" onchange="deptchange(event)" required class="form-control">
-                                                            <option value="0">Please select a Department</option>
-                                                            @foreach (var item in ViewBag.dept)
-                                                            {
-                                                                <option value="@item.Value">@item.Text</option>
-                                                            }
+                                                        <label> Language </label>
+                                                        <select name="language[0]" id="Language[0]" value="" required class="form-control">
+                                                            <option value="0">Please select a Language</option>
+
+                                                                <option value="English">English</option>
+                                                                <option value="Arabic">Arabic</option>
+                                                            
                                                         </select>
                                                     </div>
 
@@ -133,21 +131,75 @@
 
 
                                             </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-sm-12">
+                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormLanguage()">
+                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveFormLanguage()" value="Remove" />
+                                            @*<button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>*@
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-12" >
+                                        <div class="" id="ProductForm">
+                                            <div class="row clearfix" id="Product">
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label> Product Year </label>
+
+                                                        <input id="ProductYear[0]" name="products[0].year" type="number" class="form-control">
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label> Population </label>
+
+                                                        <input id="Population[0]" name="products[0].population" type="number" class="form-control">
+
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label> Sample </label>
+
+                                                        <input id="Sample[0]" name="products[0].sample" type="number" class="form-control">
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="col-sm-12">
-                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicForm()">
-                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveForm()" value="Remove" />
+                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormProduct()">
+                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveFormProduct()" value="Remove" />
                                             @*<button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>*@
                                         </div>
 
 
 
 
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label> Merge Observations </label>
 
+                                            <input id="MergeObservations" asp-for="mergeObservations" type="checkbox" class="form-control">
 
-                                    <div class="col-sm-12">
+                                        </div>
+                                        </div>
+
+                                    <div class="col-sm-12" id="Observation">
                                         <div class="" id="ObservationForm">
                                             <div class="row clearfix">
 
@@ -417,7 +469,7 @@
     }
     function RemoveFormObservation() {
         var nearByDiv = document.getElementById('ObservationForm');
-        document.getElementById('Observation').removeChild(nearByDiv.lastChild);
+        document.getElementById('ObservationForm').removeChild(nearByDiv.lastChild);
     }
     function deptchange(){
         var inputValue = event.currentTarget.value;
@@ -452,6 +504,50 @@
 
         
    
+    }
+
+    function DynamicFormProduct() {
+
+        nearByDiv = document.getElementById('ProductForm');
+        var e = nearByDiv.children;
+        var length = e.length;
+        i = length;
+        var newdiv = document.createElement('DIV');
+        newdiv.className = 'row clearfix';
+        var district = '<div class="col-sm-6"> <div class="form-group" ><label> Year : </label><input class="form-control" type="number" name="products[' + i + '].year" id="ProductYear[' + i + ']" >';
+        district = district + '</div></div>';
+        var district1 = '<div class="col-sm-6"> <div class="form-group" ><label> Population : </label><input class="form-control" type="number" name="products[' + i + '].population" id="Population[' + i + ']" >';
+        district1 = district1 + '</div></div>';
+        var district2 = '<div class="col-sm-6"> <div class="form-group" ><label> Sample : </label><input class="form-control" type="number" name="products[' + i + '].sample" id="Sample[' + i + ']" >';
+        district2 = district2 + '</div></div>';
+        var completeForm = district + district1 + district2;
+        newdiv.innerHTML = completeForm;
+        nearByDiv.appendChild(newdiv);
+    }
+    function RemoveFormProduct() {
+        var nearByDiv = document.getElementById('ProductForm');
+        document.getElementById('ProductForm').removeChild(nearByDiv.lastChild);
+    }
+
+    function DynamicFormLanguage() {
+
+        nearByDiv = document.getElementById('LanguageForm');
+        var e = nearByDiv.children;
+        var length = e.length;
+        i = length;
+        var newdiv = document.createElement('DIV');
+        newdiv.className = 'row clearfix';
+        var district = '<div class="col-sm-6"> <div class="form-group" ><label> Language: </label><select class="form-control" name="language[' + i + ']" id="Language[' + i + ']" required = "required">';
+        district = district + '<option value="0">Please select a Language</option><option value="English">English</option> <option value="Arabic">Arabic</option> ';
+
+        district = district + '</select></div></div>';
+        var completeForm = district;
+        newdiv.innerHTML = completeForm;
+        nearByDiv.appendChild(newdiv);
+    }
+    function RemoveFormLanguage() {
+        var nearByDiv = document.getElementById('LanguageForm');
+        document.getElementById('LanguageForm').removeChild(nearByDiv.lastChild);
     }
 </script>
 

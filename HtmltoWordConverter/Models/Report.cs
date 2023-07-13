@@ -13,6 +13,9 @@ namespace HtmltoWordConverter.Models
         public DateTime endDate { get; set; }
         public List<DepartmentVM> DepartmentSection { get; set; }
         public List<ObservationVM> ObservationVM { get; set; }
+        public List<products> products { get; set; }
+        public List<string> language { get; set; }
+        public Boolean mergeObservations { get; set; }
     }
 
     public class DepartmentVM
@@ -54,6 +57,13 @@ namespace HtmltoWordConverter.Models
         public int SubDepartmentId { get; set; }
         public int departmentId { get; set; }
         public string Name { get; set; }
+    }
+
+    public class products
+    {
+        public int year { get; set; }
+        public int population { get; set; }
+        public int sample { get; set; }
     }
 
     public class CascadingDropdownViewModel
