@@ -7,7 +7,7 @@
 <div class="content-header row">
     <div class="content-header-left col-12 mb-2 mt-1">
         <div class="breadcrumbs-top">
-            <h5 class="content-header-title float-left pr-1 mb-0">Auditor</h5>
+            <h5 class="content-header-title float-left pr-1 mb-0">Audit Report</h5>
             <div class="breadcrumb-wrapper d-none d-sm-block">
                 <ol class="breadcrumb p-0 mb-0 pl-1">
                     <li class="breadcrumb-item">
@@ -32,7 +32,7 @@
             <div class="col-md-12 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add Auditor</h5>
+                        <h5>Create New Audit Report</h5>
                     </div>
                     <div class="card-body">
                         <form asp-action="Create" enctype="multipart/form-data" class="form form-vertical">
@@ -42,235 +42,228 @@
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label asp-for="clientId" class="control-label">Client</label>
-                                            <select asp-for="clientId" class="form-control">
-                                                <option value="0">Please select a client</option>
-                                                @foreach (var item in ViewBag.clientId)
+                                            <label asp-for="client.clientId" class="control-label">Client <span style="color: red">*</span></label>
+                                            <select asp-for="client.clientId" class="form-control" required>
+                                                <option value="">Please select a client</option>
+                                                @foreach (var item in ViewBag.clients)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
                                                 }
                                             </select>
+                                            <span asp-validation-for="client.clientId" class="text-danger"></span>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label asp-for="companyId" class="control-label">Company</label>
-                                            <select asp-for="companyId" class="form-control">
-                                                <option value="0">Please select a company</option>
-                                                @foreach (var item in ViewBag.companyId)
+                                            <label asp-for="company.companyId" class="control-label">Company <span style="color: red">*</span></label>
+                                            <select asp-for="company.companyId" class="form-control" required>
+                                                <option value="">Please select a company</option>
+                                                @foreach (var item in ViewBag.companies)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
                                                 }
                                             </select>
+                                            <span asp-validation-for="company.companyId" class="text-danger"></span>
                                         </div>
                                     </div>
+
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label> Date </label>
+                                            <label> Start Date <span style="color: red">*</span></label>
                                             <input type="date" asp-for="startDate" value="" required class="form-control" />
-
+                                            <span asp-validation-for="startDate" class="text-danger"></span>
                                         </div>
                                     </div>
+
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label> Date </label>
+                                            <label> End Date <span style="color: red">*</span></label>
                                             <input type="date" asp-for="endDate" value="" required class="form-control" />
-
+                                            <span asp-validation-for="endDate" class="text-danger"></span>
                                         </div>
                                     </div>
+
+                                    <hr /> <!-- Separator line for Department, Products, and Observations -->
 
                                     <div class="col-sm-12">
                                         <div class="" id="DepartmentForm">
-                                            <div  id="DepartmentRow" class="row clearfix">
-
+                                            <div id="DepartmentRow[0]" class="row clearfix DepartmentRow">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label> Department </label>
+                                                        <label> Department <span style="color: red">*</span></label>
                                                         <select name="DepartmentSection[0].departmentId" id="department[0]" value="" onchange="deptchange(event)" required class="form-control">
-                                                            <option value="0">Please select a Department</option>
-                                                            @foreach (var item in ViewBag.dept)
+                                                            <option value="">Please select a Department</option>
+                                                            @foreach (var item in ViewBag.departments)
                                                             {
                                                                 <option value="@item.Value">@item.Text</option>
                                                             }
                                                         </select>
+                                                        <span asp-validation-for="DepartmentSection[0].departmentId" class="text-danger"></span>
                                                     </div>
-
-
                                                 </div>
-
-
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="col-sm-12">
-                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicForm()">
-                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveForm()" value="Remove" />
-                                            @*<button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>*@
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-sm-12">
-                                        <div class="" id="LanguageForm">
-                                            <div  class="row clearfix">
-
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label> Language </label>
-                                                        <select name="language[0]" id="Language[0]" value="" required class="form-control">
-                                                            <option value="0">Please select a Language</option>
-
-                                                                <option value="English">English</option>
-                                                                <option value="Arabic">Arabic</option>
+                                                <div id="subDepartment" class="col-sm-6">
+                                                </div>
+                     
+                                                <div class="col-sm-12" id="Observation">
+                                                    <div class="" id="ObservationForm">
+                                                        <div class="row clearfix">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label> Observation <span style="color: red">*</span></label>
+                                                                    <select name="DepartmentSection[0].ObservationVM[0].ObservationId" id="Observation[0]" value="" required class="form-control">
+                                                                        <option value="">Please select an Observation</option>
+                                                                        @foreach (var item in ViewBag.Observation)
+                                                                        {
+                                                                            <option value="@item.Value">@item.Text</option>
+                                                                        }
+                                                                    </select>
+                                                                    <span asp-validation-for="DepartmentSection[0].ObservationVM[0].ObservationId" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
                                                             
-                                                        </select>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label> Observation Risk <span style="color: red">*</span></label>
+                                                                    <select name="DepartmentSection[0].ObservationVM[0].ObservationRisk" id="ObservationRisk[0]" value="" required class="form-control">
+                                                                        <option value="">Please select an Observation Risk</option>
+                                                                        <option value="High">High</option>
+                                                                        <option value="moderate">Moderate</option>
+                                                                        <option value="low">Low</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="DepartmentSection[0].ObservationVM[0].ObservationRisk" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label> Observation Sample </label>
+                                                                    <input id="ObservationSample[0]" type="text" class="form-control" pattern="\d{3}-[A-Z]" title="Please enter the sample in the format '010-I'">
+                                                                    <input type="button" id="btn[0]" class="btn btn-success btn-round btn btn-primary" value="Add" onclick="Addsample(0,event)">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label> Sample List</label>
+                                                                <div id="ObservationSampleList[0]" class="form-group">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-
-
+                                                    <br />
+                                                    <div class="col-sm-12 text-right">
+                                                        <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormObservation(event)">
+                                                        <input type="button" class="btn btn-danger btn-round" onclick="RemoveFormObservation()" value="Remove" />
+                                                    </div>
                                                 </div>
 
 
+                                                <hr />
+                                                <br />
+                                                <br />
+                                                <br />
+
                                             </div>
+
+                                           
                                         </div>
                                         <br />
-                                        <div class="col-sm-12">
-                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormLanguage()">
-                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveFormLanguage()" value="Remove" />
-                                            @*<button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>*@
+                                        <div class="col-sm-12 text-right">
+                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DepartmentDynamicForm()">
+                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveDepartmentForm()" value="Remove" />
                                         </div>
                                     </div>
 
-
-
-                                    <div class="col-sm-12" >
+                                    <hr /> <!-- Separator line for Products -->
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <div class="col-sm-12">
                                         <div class="" id="ProductForm">
                                             <div class="row clearfix" id="Product">
-
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label> Product Year </label>
-
-                                                        <input id="ProductYear[0]" name="products[0].year" type="number" class="form-control">
-
+                                                        <label> Product <span style="color: red">*</span></label>
+                                                        <select name="products[0].id" id="productName[0]" value="" required class="form-control">
+                                                            <option value="">Please select product</option>
+                                                            @foreach (var item in ViewBag.products)
+                                                            {
+                                                                <option value="@item.Value">@item.Text</option>
+                                                            }
+                                                        </select>
+                                                        <span asp-validation-for="products[0].id" class="text-danger"></span>
                                                     </div>
-
-
-                                                </div>
-
-                                                                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label> Population </label>
-
-                                                        <input id="Population[0]" name="products[0].population" type="number" class="form-control">
-
-                                                    </div>
-
-
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label> Sample </label>
-
-                                                        <input id="Sample[0]" name="products[0].sample" type="number" class="form-control">
-
+                                                        <label> Product Year <span style="color: red">*</span></label>
+                                                        <input id="ProductYear[0]" name="products[0].year" type="text" class="form-control" pattern="20(0[5-9]|1[0-9]|20)" required title="Please enter a valid year starting from 2005 (e.g., 2005-2029)">
+                                                        <span class="text-danger">Please enter a valid year starting from 2005 (e.g., 2005-2029)</span>
                                                     </div>
-
-
                                                 </div>
-                                            </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label> Population <span style="color: red">*</span></label>
+                                                        <input id="Population[0]" name="products[0].population" type="number" class="form-control" required>
+                                                        <span asp-validation-for="products[0].population" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label> Sample</label>
+                                                        <input id="Sample[0]" name="products[0].sample" type="text" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12 text-right">
                                             <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormProduct()">
                                             <input type="button" class="btn btn-danger btn-round" onclick="RemoveFormProduct()" value="Remove" />
-                                            @*<button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>*@
                                         </div>
+                                    </div>
 
-
-
-
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label> Merge Observations </label>
-
-                                            <input id="MergeObservations" asp-for="mergeObservations" type="checkbox" class="form-control">
-
-                                        </div>
-                                        </div>
-
-                                    <div class="col-sm-12" id="Observation">
-                                        <div class="" id="ObservationForm">
+                                 
+                                    <div class="col-sm-12">
+                                        <div class="" id="LanguageForm">
                                             <div class="row clearfix">
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label> Observation </label>
-                                                        <select name="ObservationVM[0].ObservationId" id="Observation[0]" value="" required class="form-control">
-                                                            <option value="0">Please select a Observation</option>
-                                                            @foreach (var item in ViewBag.Observation)
-                                                            {
-                                                                <option value="@item.Value">@item.Text</option>
-                                                            }
-                                                        </select>
-                                                    </div>
+                                                        <label> Language </label>
+                                                        <select name="language" id="Language" value="" required class="form-control">
+                                                            <option value="0">Please select a Language</option>
 
-
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label> Observation Risk</label>
-                                                        <select name="ObservationVM[0].ObservationRisk" id="ObservationRisk[0]" value="" required class="form-control">
-                                                            <option value="0">Please select a Observation Risk</option>
-
-                                                            <option value="High">High</option>
-                                                            <option value="moderate">moderate</option>
-                                                            <option value="low">low</option>
+                                                            <option value="English">English</option>
+                                                            <option value="Arabic">Arabic</option>
 
                                                         </select>
                                                     </div>
-
-
                                                 </div>
-
-
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Sample</label>
-                                                       
-                                                            <input id="ObservationSample[0]" type="text" class="form-control" placeholder="Enter Audit Request Location">
-                                                            
-                                                      
-                                                        <input type="button" id="btn[0]" class="btn btn-success btn-round" value="Add" onclick="Addsample(event)">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div id="ObservationSampleList[0]" class="form-group">
-                                                        
-                                                    </div>
-                                                </div>
-
-
                                             </div>
                                         </div>
-                                        <br />
-                                        <div class="col-sm-12">
-                                            <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormObservation()">
-                                            <input type="button" class="btn btn-danger btn-round" onclick="RemoveFormObservation()" value="Remove" />
-                                            @*<button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>*@
+                                    </div>
+                                    <br />
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label> Merge Observations </label>
+                                            <input id="MergeObservations" asp-for="mergeObservations" type="checkbox">
                                         </div>
                                     </div>
 
 
+                                    <div class="col-sm-6" id="MergeSelect" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="control-label">Observations </label>
+                                            <select id="demo4" multiple="multiple" name="MergedObservations" class="form-control" asp-items="ViewBag.Observation"></select>
 
+                                        </div>
+                                    </div>
                                     <div class="col-12 d-flex justify-content-end">
                                         <input type="submit" value="Create" class="btn btn-primary mr-1" />
-
-                                        <button asp-action="Index" class="btn btn-light-secondary">Back</button>
+                                        @*<button asp-action="Index" class="btn btn-light-secondary">Back</button>*@
                                     </div>
+
                                 </div>
-
-
                             </div>
                         </form>
                     </div>
@@ -279,17 +272,17 @@
         </div>
     </section>
     <!-- Basic Vertical form layout section end -->
-
-
-
 </div>
+
+
+
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-      
+
     }
-    
+    @*
     <script type="text/javascript">
         $(document).ready(function () {
             $('#department[0]').change(function () {
@@ -299,7 +292,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: "/Home/GetCities",
+                    url: "/Home/GetSubDepartments",
                     data: { id: inputValue },
                     datatype: "json",
                     traditional: true,
@@ -309,7 +302,7 @@
 
 
                         var district1 = '<div class="col-sm-6"> <div class="form-group" ><label>Sub Department : </label><select class="form-control" name="DepartmentSection[0].SubDepartmentId" id="subdepartment[0]" required = "required">';
-                        district1 = district1 + '<option value="0">Please select a Sub Department</option>';
+                        district1 = district1 + '<option value="">Please select a Sub Department</option>';
                         for (var k = 0; k < data.length; k++) {
                             district = district + '<option value="' + data[j].Value + '">' + data[j].Text + '</option>';
                         }
@@ -327,6 +320,17 @@
 
             })
         })
+    </script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#MergeObservations").on("change", function () {
+                if ($(this).is(":checked")) {
+                    $("#MergeSelect").show();
+                } else {
+                    $("#MergeSelect").hide();
+                }
+            });
+        });
     </script>
 }
 
@@ -334,105 +338,211 @@
 <script>
 
     var i = 0;
-    function DynamicForm() {
-
+    function DepartmentDynamicForm() {
         nearByDiv = document.getElementById('DepartmentForm');
-        var e = nearByDiv.children;
+        var e = nearByDiv.querySelectorAll('[id^="DepartmentRow"]');;
         var length = e.length;
-        var data1 = @Html.Raw(Json.Serialize(ViewBag.dept));
+        var data1 = @Html.Raw(Json.Serialize(ViewBag.departments));
         i = length;
         var newdiv = document.createElement('DIV');
+        newdiv.id = "DepartmentRow[" + i + "]"
         newdiv.className = 'row clearfix';
 
         var district = '<div class="col-sm-6"> <div class="form-group" ><label> Department : </label><select class="form-control" name="DepartmentSection[' + i + '].departmentId" id="department[' + i + ']" required = "required">';
-        district = district + '<option value="0">Please select a Department</option>';
+        district = district + '<option value="">Please select a Department</option>';
         for (var j = 0; j < data1.length; j++) {
             district = district + '<option value="' + data1[j].value + '">' + data1[j].text + '</option>';
         }
         district = district + '</select></div></div>';
-
-        var completeForm = district + "<br />";
+        var subDeptDiv ='<div id="subDepartment" class="col-sm-6">'
+        subDeptDiv=subDeptDiv+'</div>'
+        var completeForm = district +subDeptDiv+ "<br />";
         newdiv.innerHTML = completeForm;
         nearByDiv.appendChild(newdiv);
         var inputContainer = $('#NearByForm');
         var v = 'department[' + i + ']';
+
+        // Adding observation
+        var newObsdivOuter = document.createElement('div');
+        newObsdivOuter.className = "col-sm-12"
+        newObsdivOuter.id = "Observation"
+        var newObsdivForm = document.createElement('div');
+        newObsdivForm.id = "ObservationForm"
+        newObsdivOuter.appendChild(newObsdivForm)
+        var DepartmentRowDiv = document.getElementById("DepartmentRow[" + i + "]");
+        DepartmentRowDiv.appendChild(newObsdivOuter);
+        var departmentRow = newObsdivForm.parentNode.parentNode.id
+        var departmentRowindex = departmentRow.match(/\d/) // will give you the first digit in the string
+        var eObs = newObsdivForm.children;
+        var lengthObs = eObs.lengthObs;
+        var data1 = @Html.Raw(Json.Serialize(ViewBag.Observation));
+        var iObs = 0;
+        var InnerObsFormdiv = document.createElement('DIV');
+        InnerObsFormdiv.className = 'row clearfix';
+
+        var district0 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation : </label><select class="form-control" name="DepartmentSection[' + departmentRowindex[0] + '].ObservationVM[' + iObs + '].ObservationId" id="Observation[' + iObs + ']" required = "required">';
+        district0 = district0 + '<option value="">Please select a Observation</option>';
+        for (var j = 0; j < data1.length; j++) {
+            district0 = district0 + '<option value="' + data1[j].value + '">' + data1[j].text + '</option>';
+        }
+        district0 = district0 + '</select></div></div>';
+
+        var district2 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation Risk: </label><select class="form-control" name="DepartmentSection[' + departmentRowindex[0] + '].ObservationVM[' + iObs + '].ObservationRisk" id="ObservationRisk[' + iObs + ']" required = "required">';
+        district2 = district2 + '<option value="">Please select a Observation risk</option><option value="High">High</option> <option value="moderate">moderate</option> <option value="low">low</option>';
+
+        district2 = district2 + '</select></div></div>';
+
+
+        var district3 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation Sample: </label> <input name="DepartmentSection[' + departmentRowindex[0] + '].ObservationSample[' + iObs + ']" id="ObservationSample[' + iObs + ']" type="text" class="form-control" placeholder="Enter Audit Request Location">';
+        district3 = district3 + '<input type="button" id="btn[' + iObs + ']" class="btn btn-success btn-round" value="Add" onclick="Addsample(' + departmentRowindex[0] + ',event)">';
+
+        district3 = district3 + '</div></div>';
+
+        var district4 = '<div class="col-sm-6"> <label> Sample List</label> <div id="ObservationSampleList[' + iObs + ']" class="form-group">';
+        district4 = district4 + '</div></div>';
+
+        var completeFormObs = district0 + "<br />" + district2 + "<br />" + district3 + "<br />" + district4 + "<br />";
+        InnerObsFormdiv.innerHTML = completeFormObs;
+        newObsdivForm.appendChild(InnerObsFormdiv);
+        var linebreak = document.createElement('br');
+        var ButtonRow = document.createElement('div');
+        ButtonRow.className = "col-sm-12 text-right"
+        var buttonAdd = ' <input type="button" class="btn btn-success btn-round" value="Add New" onclick="DynamicFormObservation(event)">'
+        var buttonRemove = '<input type = "button" class="btn btn-danger btn-round" onclick = "RemoveFormObservation()" value = "Remove" />'
+        var buttons = buttonAdd + buttonRemove
+        ButtonRow.innerHTML= buttons;
+        newObsdivOuter.appendChild(ButtonRow)
         var aaxs = document.getElementById(v)
         aaxs.addEventListener('change', function () {
-            debugger;
             var inputValue = $(this).val();
+            console.log("inputValue", inputValue)
 
+            console.log("event", event);
+            var departmentId = event.target.value;
+            console.log("departmentId", departmentId);
+            var url = '/home/GetSubDepartments/' + inputValue;
+
+            // Remove the previously created element
+            var previousElement = document.getElementById("subdepartment[" + i + "]");
+            if (previousElement) {
+                previousElement.parentElement.remove();
+            }
 
             $.ajax({
-                type: "post",
-                url: "/Home/GetCities",
-                data: { id: inputValue },
-                datatype: "json",
-                traditional: true,
+                url: url,
+                type: 'GET',
                 success: function (data) {
+                    console.log("subdep", data);
 
+                    if (data.length > 0) {
+                        var newdiv = document.createElement('div');
+                        newdiv.className = 'col-sm-12';
 
-                    var newdiv1 = document.createElement('DIV');
-                    newdiv1.className = 'row clearfix';
+                        var labelElement = document.createElement('label');
+                        labelElement.textContent = 'Sub Department:';
+                        newdiv.appendChild(labelElement);
 
-                    var district1 = '<div class="col-sm-6"> <div class="form-group" ><label>Sub Department : </label><select class="form-control" name="DepartmentSection[' + i + '].SubDepartmentId" id="subdepartment[' + i + ']" required = "required">';
-                    district1 = district1 + '<option value="0">Please select a Sub Department</option>';
-                    for (var k = 0; k < data.length; k++) {
-                        district = district + '<option value="' + data[j].Value + '">' + data[j].Text + '</option>';
+                        var selectElement = document.createElement('select');
+                        selectElement.className = 'form-control';
+                        selectElement.name = "DepartmentSection[" + i + "].SubDepartmentId";
+                        selectElement.id = "subdepartment[" + i + "]";
+                        selectElement.required = true;
+
+                        var defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.text = 'Please select a Sub Department';
+                        selectElement.appendChild(defaultOption);
+
+                        for (var k = 0; k < data.length; k++) {
+                            var optionElement = document.createElement('option');
+                            optionElement.value = data[k].value;
+                            optionElement.text = data[k].text;
+                            selectElement.appendChild(optionElement);
+                        }
+
+                        newdiv.appendChild(selectElement);
+                        newdiv.innerHTML += '<br />';
+
+                        var nearByDiv = document.getElementById("DepartmentRow[" + i + "]");
+                        var subdepartmentdiv = nearByDiv.querySelector('#subDepartment')
+                    subdepartmentdiv.appendChild(newdiv);
                     }
-                    district1 = district1 + '</select></div></div>';
 
-                    var completeForm2 = completeForm + district1 + "<br />";
-                    newdiv.innerHTML = completeForm2;
-                    nearByDiv.appendChild(newdiv);
-                    document.getElementById(v).value = inputValue
+                   
 
-
+                  
                 }
             });
 
+           
 
-            // Additional script logic for the cloned input field
-            // ...
+
         });
     }
-    function RemoveForm() {
+    function RemoveDepartmentForm() {
         var nearByDiv = document.getElementById('DepartmentForm');
+          var countDept = nearByDiv.childElementCount;
+        if(countDept>1){
         document.getElementById('DepartmentForm').removeChild(nearByDiv.lastChild);
+        }
     }
 
 
-    function Addsample(event) {
+    function Addsample(departmentRowindex,event) {
         debugger;
         var input = event.currentTarget.id;
         var firstDigit = input.match(/\d/) // will give you the first digit in the string
         var index = input.indexOf(firstDigit)
-        var observation = document.getElementById('ObservationSample[' + firstDigit[0] + ']').value;
-        if(observation!=""){
-      var  nearByDiv = document.getElementById('ObservationSampleList['+ firstDigit[0] + ']');
+        var DepartmentRowDiv = document.getElementById("DepartmentRow[" + departmentRowindex + "]");
+        var inputid = 'ObservationSample[' + firstDigit[0] + ']'
+        var observationtemp = DepartmentRowDiv.querySelectorAll('[id^="ObservationSample["]');
+        var observation =null;
+        var observationDiv =null;
+        for (let i = 0; i < observationtemp.length; i++) {
+
+          if(observationtemp[i].id == inputid){
+              observation=observationtemp[i].value
+              observationDiv=observationtemp[i]
+          }
+        }
+        if (observation != "") {
+            var neardivv = 'ObservationSampleList[' + firstDigit[0] + ']'
+            var nearByDivtemp = DepartmentRowDiv.querySelectorAll('[id^="ObservationSampleList["]');
+            var nearByDiv = null
+             for (let i = 0; i < nearByDivtemp.length; i++) {
+
+                if (nearByDivtemp[i].id == neardivv) {
+                    nearByDiv = nearByDivtemp[i]
+          }
+        }
             var count = nearByDiv.childElementCount
+           
             var z = document.createElement('input');
             var z1 = document.createElement('br');
             z.appendChild(z1)
-        z.innerHTML = observation;
+            z.innerHTML = observation;
             z.value = observation;
             z.className = "form-control disabled"
             z.style = "pointer-events: none;"
-            z.name = 'ObservationVM[' + firstDigit[0] + '].ObservationSamples[' + count + ']'
+            z.name = 'DepartmentSection[' + departmentRowindex + '].ObservationVM[' + firstDigit[0] + '].ObservationSamples[' + count + ']'
             z.id = 'ObservationVM[' + firstDigit[0] + '].ObservationSamples[' + count + ']'
-            
+
             var newlist = '<input>'
             nearByDiv.appendChild(z);
-        debugger;
-         ;
-        document.getElementById('ObservationSample[' + firstDigit[0] + ']').value=""
+            debugger;
+            ;
+            observationDiv.value = ""
         }
-        
+
     }
 
 
-    function DynamicFormObservation() {
+    function DynamicFormObservation(event) {
 
-        nearByDiv = document.getElementById('ObservationForm');
+        nearByDiv = event.target.parentNode.parentNode.querySelector('#ObservationForm');
+
+        var departmentRow = nearByDiv.parentNode.parentNode.id
+        var departmentRowindex = departmentRow.match(/\d/) // will give you the first digit in the string
         var e = nearByDiv.children;
         var length = e.length;
         var data1 = @Html.Raw(Json.Serialize(ViewBag.Observation));
@@ -440,26 +550,26 @@
         var newdiv = document.createElement('DIV');
         newdiv.className = 'row clearfix';
 
-        var district = '<div class="col-sm-6"> <div class="form-group" ><label> Observation : </label><select class="form-control" name="Observation[' + i + ']" id="Observation[' + i + ']" required = "required">';
-        district = district + '<option value="0">Please select a Observation</option>';
+        var district = '<div class="col-sm-6"> <div class="form-group" ><label> Observation : </label><select class="form-control" name="DepartmentSection[' + departmentRowindex[0] + '].ObservationVM[' + i + '].ObservationId" id="Observation[' + i + ']" required = "required">';
+        district = district + '<option value="">Please select a Observation</option>';
         for (var j = 0; j < data1.length; j++) {
             district = district + '<option value="' + data1[j].value + '">' + data1[j].text + '</option>';
         }
         district = district + '</select></div></div>';
 
-        var district2 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation Risk: </label><select class="form-control" name="ObservationRisk[' + i + ']" id="ObservationRisk[' + i + ']" required = "required">';
-        district2 = district2 + '<option value="0">Please select a Observation risk</option><option value="High">High</option> <option value="moderate">moderate</option> <option value="low">low</option>';
+        var district2 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation Risk: </label><select class="form-control" name="DepartmentSection[' + departmentRowindex[0] + '].ObservationVM[' + i + '].ObservationRisk" id="ObservationRisk[' + i + ']" required = "required">';
+        district2 = district2 + '<option value="">Please select a Observation risk</option><option value="High">High</option> <option value="moderate">moderate</option> <option value="low">low</option>';
 
-            district2= district2 + '</select></div></div>';
+        district2 = district2 + '</select></div></div>';
 
 
-        var district3 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation Sample: </label> <input name="ObservationSample[' + i + ']" id="ObservationSample[' + i + ']" type="text" class="form-control" placeholder="Enter Audit Request Location">';
-        district3 = district3 + '<input type="button" id="btn[' + i + ']" class="btn btn-success btn-round" value="Add" onclick="Addsample(event)">';
+        var district3 = '<div class="col-sm-6"> <div class="form-group" ><label> Observation Sample: </label> <input name="DepartmentSection[' + departmentRowindex[0] + '].ObservationSample[' + i + ']" id="ObservationSample[' + i + ']" type="text" class="form-control" placeholder="Enter Audit Request Location">';
+        district3 = district3 + '<input type="button" id="btn[' + i + ']" class="btn btn-success btn-round" value="Add" onclick="Addsample(' + departmentRowindex[0] + ',event)">';
 
         district3 = district3 + '</div></div>';
 
-        var district4 = '<div class="col-sm-6"> <ul id="ObservationSampleList[' + i + ']">';
-               district4 = district4 + '</ul></div>';
+        var district4 = '<div class="col-sm-6"> <label> Sample List</label> <div id="ObservationSampleList[' + i + ']" class="form-group">';
+        district4 = district4 + '</div></div>';
 
         var completeForm = district + "<br />" + district2 + "<br />" + district3 + "<br />" + district4 + "<br />";
         newdiv.innerHTML = completeForm;
@@ -469,42 +579,134 @@
     }
     function RemoveFormObservation() {
         var nearByDiv = document.getElementById('ObservationForm');
+          var countObs = nearByDiv.childElementCount;
+        if(countObs>1){
         document.getElementById('ObservationForm').removeChild(nearByDiv.lastChild);
+        }
     }
-    function deptchange(){
-        var inputValue = event.currentTarget.value;
-            $.ajax({
-                type: "post",
-                url: "/Home/GetCities",
-                data: { id: inputValue },
-                datatype: "json",
-                traditional: true,
-                success: function (data) {
 
+    function deptchange(event) {
+        var DeptRowId = event.target.id;
+       
+        var departmentRowid = DeptRowId.match(/\d/) // will give you the first digit in the string
 
-                var newdiv = document.createElement('DIV');
-                newdiv.className = 'col-sm-6';
-                nearByDiv = document.getElementById('DepartmentRow');
-                    var district1 = ' <div class="form-group" ><label>Sub Department : </label><select class="form-control" name="DepartmentSection[0].SubDepartmentId" id="subdepartment[0]" required = "required">';
-                    district1 = district1 + '<option value="0">Please select a Sub Department</option>';
+        console.log("event", event);
+        var departmentId = event.target.value;
+        var url = '/home/GetSubDepartments/' + departmentId;
+        console.log("departmentId", departmentId);
+
+        // Remove the previously created element
+        var previousElement = document.getElementById('subdepartment[0]');
+        if (previousElement) {
+            previousElement.parentElement.remove();
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                console.log("subdep", data);
+
+                if (data.length > 0) {
+                    var newdiv = document.createElement('div');
+                    newdiv.className = 'col-sm-12';
+
+                    var labelElement = document.createElement('label');
+                    labelElement.textContent = 'Sub Department:';
+                    newdiv.appendChild(labelElement);
+
+                    var selectElement = document.createElement('select');
+                    selectElement.className = 'form-control';
+                    selectElement.name = 'DepartmentSection[0].SubDepartmentId';
+                    selectElement.id = 'subdepartment[0]';
+                    selectElement.required = true;
+
+                    var defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'Please select a Sub Department';
+                    selectElement.appendChild(defaultOption);
+
                     for (var k = 0; k < data.length; k++) {
-                    district1 = district1 + '<option value="' + data[k].Value + '">' + data[k].Text + '</option>';
+                        var optionElement = document.createElement('option');
+                        optionElement.value = data[k].value;
+                        optionElement.text = data[k].text;
+                        selectElement.appendChild(optionElement);
                     }
-                    district1 = district1 + '</select></div>';
 
-                    var completeForm = district1 + "<br />";
-                    newdiv.innerHTML = completeForm;
-                    nearByDiv.appendChild(newdiv);
+                    newdiv.appendChild(selectElement);
+                    newdiv.innerHTML += '<br />';
 
-
-
+                    var nearByDiv = document.getElementById('DepartmentRow['+departmentRowid[0]+']');
+                    var subdepartmentdiv = nearByDiv.querySelector('#subDepartment')
+                    subdepartmentdiv.appendChild(newdiv);
                 }
 
-            });
+               
 
-        
-   
+
+            }
+        });
     }
+
+
+    // function deptchange(event) {
+    //    console.log("event", event)
+    //    var departmentId = event.target.value;
+    //    var url = '/home/GetSubDepartments/' + departmentId;
+    //    console.log("departmentId", departmentId)
+
+    //    $.ajax({
+    //        url: url,
+    //        type: 'GET',
+    //        success: function (response) {
+    //            var subDepartmentDropdown = $('#subDepartmentDropdown');
+
+    //            // Clear existing options
+    //            subDepartmentDropdown.empty();
+
+    //            // Add new options based on the response
+    //            $.each(response, function (index, item) {
+    //                subDepartmentDropdown.append($('<option>', {
+    //                    value: item.value,
+    //                    text: item.text
+    //                }));
+    //            });
+    //        },
+    //        error: function (xhr, status, error) {
+    //            console.error(error);
+    //        }
+    //    });
+    //}
+
+    //function deptchange(event){
+    //    debugger
+    //     console.log("event", event)
+    //    var departmentId = event.target.value;
+    //    var url = '/home/GetSubDepartments/' + departmentId;
+    //    console.log("departmentId", departmentId)
+    //        $.ajax({
+    //        url: url,
+    //        type: 'GET',
+    //            success: function (data) {
+
+    //            console.log("subdep", data)
+
+    //            var newdiv = document.createElement('DIV');
+    //            newdiv.className = 'col-sm-6';
+    //            nearByDiv = document.getElementById('DepartmentRow');
+    //                var district1 = ' <div class="form-group" ><label>Sub Department : </label><select class="form-control" name="DepartmentSection[0].SubDepartmentId" id="subdepartment[0]" required = "required">';
+    //                district1 = district1 + '<option value="">Please select a Sub Department</option>';
+    //                for (var k = 0; k < data.length; k++) {
+    //                district1 = district1 + '<option value="' + data[k].Value + '">' + data[k].Text + '</option>';
+    //                }
+    //                district1 = district1 + '</select></div>';
+
+    //                var completeForm = district1 + "<br />";
+    //                newdiv.innerHTML = completeForm;
+    //                nearByDiv.appendChild(newdiv);
+    //            }
+    //        });
+    //}
 
     function DynamicFormProduct() {
 
@@ -512,21 +714,31 @@
         var e = nearByDiv.children;
         var length = e.length;
         i = length;
+        var dataProd = @Html.Raw(Json.Serialize(ViewBag.products));
         var newdiv = document.createElement('DIV');
         newdiv.className = 'row clearfix';
-        var district = '<div class="col-sm-6"> <div class="form-group" ><label> Year : </label><input class="form-control" type="number" name="products[' + i + '].year" id="ProductYear[' + i + ']" >';
+        var district0 = '<div class="col-sm-6"> <div class="form-group" ><label> Poduct : </label><select class="form-control" name="products[' + i + '].id" id="productName[' + i + ']" required = "required">';
+        district0 = district0 + '<option value="">Please select a Product</option>';
+        for (var j = 0; j < dataProd.length; j++) {
+            district0 = district0 + '<option value="' + dataProd[j].value + '">' + dataProd[j].text + '</option>';
+        }
+        district0 = district0 + '</select></div></div>';
+        var district = '<div class="col-sm-6"> <div class="form-group" ><label>Product Year : </label><input class="form-control" type="number" name="products[' + i + '].year" id="ProductYear[' + i + ']" pattern="20(0[5-9]|1[0-9]|20)" required title="Please enter a valid year starting from 2005 (e.g., 2005-2029)">  <span class="text-danger">Please enter a valid year starting from 2005 (e.g., 2005-2029)</span>';
         district = district + '</div></div>';
-        var district1 = '<div class="col-sm-6"> <div class="form-group" ><label> Population : </label><input class="form-control" type="number" name="products[' + i + '].population" id="Population[' + i + ']" >';
+        var district1 = '<div class="col-sm-6"> <div class="form-group" ><label> Population : </label><input class="form-control" type="number" name="products[' + i + '].population" id="Population[' + i + ']" required = "required">';
         district1 = district1 + '</div></div>';
         var district2 = '<div class="col-sm-6"> <div class="form-group" ><label> Sample : </label><input class="form-control" type="number" name="products[' + i + '].sample" id="Sample[' + i + ']" >';
         district2 = district2 + '</div></div>';
-        var completeForm = district + district1 + district2;
+        var completeForm = district0 + district + district1 + district2;
         newdiv.innerHTML = completeForm;
         nearByDiv.appendChild(newdiv);
     }
     function RemoveFormProduct() {
         var nearByDiv = document.getElementById('ProductForm');
+          var countProd = nearByDiv.childElementCount;
+        if(countProd>1){
         document.getElementById('ProductForm').removeChild(nearByDiv.lastChild);
+        }
     }
 
     function DynamicFormLanguage() {
@@ -538,7 +750,7 @@
         var newdiv = document.createElement('DIV');
         newdiv.className = 'row clearfix';
         var district = '<div class="col-sm-6"> <div class="form-group" ><label> Language: </label><select class="form-control" name="language[' + i + ']" id="Language[' + i + ']" required = "required">';
-        district = district + '<option value="0">Please select a Language</option><option value="English">English</option> <option value="Arabic">Arabic</option> ';
+        district = district + '<option value="">Please select a Language</option><option value="English">English</option> <option value="Arabic">Arabic</option> ';
 
         district = district + '</select></div></div>';
         var completeForm = district;
@@ -547,7 +759,10 @@
     }
     function RemoveFormLanguage() {
         var nearByDiv = document.getElementById('LanguageForm');
+        var count = nearByDiv.childElementCount;
+        if(count>1){
         document.getElementById('LanguageForm').removeChild(nearByDiv.lastChild);
+        }
     }
 </script>
 
